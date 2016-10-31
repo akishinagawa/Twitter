@@ -24,6 +24,8 @@ class Tweet: NSObject {
     var retweetCount: Int = 0
     var favoritesCount: Int = 0
     
+    var tweetId:String?
+    
     
     init(dictionary: NSDictionary) {
 //        print("-------->>> \(dictionary)")
@@ -71,38 +73,22 @@ class Tweet: NSObject {
         if let timestampString = timestampString {
             tweetedTimeStamp = formatter.date(from: timestampString) as NSDate?
         }
+        
+        tweetId = tweetData["id_str"] as? String
 
     }
     
     class func tweetWithArray(dictionaries: [NSDictionary]) -> [Tweet] {
-    
         var tweets = [Tweet]()
-        
         for dictionay in dictionaries {
-            
             let tweet = Tweet(dictionary: dictionay)
-            
             tweets.append(tweet)
-            
-            
         }
-        
-        
-        
-        
-        
-        
-       
+
         return tweets
-    
     }
     
     
-    
-    
-    
-    
-    
-    
+  
 
 }

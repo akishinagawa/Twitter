@@ -54,23 +54,9 @@ class TweetsTableViewCell: UITableViewCell {
             
             reweetedCountLabel.text = String(tweet.retweetCount)
             likedCountLabel.text = String(tweet.favoritesCount)
-            
-
-            
-            
-            
-            
-            
-            
-            
-            
 
         }
     }
-    
-    
-    
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -78,7 +64,6 @@ class TweetsTableViewCell: UITableViewCell {
 
         tweeterImage.layer.cornerRadius = 6
         tweeterImage.clipsToBounds = true
-        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

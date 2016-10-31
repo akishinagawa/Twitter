@@ -18,8 +18,14 @@ struct LoginInfo {
     static let REQUEST_TOKEN_URL = "oauth/request_token"
     static let AUTHORIZE_URL = "https://api.twitter.com/oauth/authorize"
     static let ACCESS_TOKEN_URL = "oauth/access_token"
+    
     static let VERIFY_CREDENTIAL_URL = "1.1/account/verify_credentials.json"
     static let HOME_TIMELINE_URL = "1.1/statuses/home_timeline.json"
+    
+    static let RETWEET_URL_PARTIAL = "1.1/statuses/retweet/"
+    
+    static let STATUS_UPDATE_URL = "1.1/statuses/update.json?"
+    
 }
 
 class TwitterClient: BDBOAuth1SessionManager {
@@ -95,6 +101,41 @@ class TwitterClient: BDBOAuth1SessionManager {
             
         })
     }
+    
+    
+    func sendTweet(statusString: String, success: @escaping () ->(), failure: @escaping (Error) -> ()) {
+        let encodedStatusString = statusString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
+        let replyTweetURLString:String = LoginInfo.STATUS_UPDATE_URL + "status=" + encodedStatusString!
+        
+        post(replyTweetURLString, parameters: nil, progress: nil, success: { (task:URLSessionDataTask, response: Any?) -> Void in
+            success()
+            }, failure: { (task:URLSessionDataTask?, error:Error) -> Void in
+                print("Send Tweet Failed. - error: \(error.localizedDescription)")
+                failure(error)
+        })
+    }
+    
+    func sendReplyTweet(targetId: String, statusString: String, success: @escaping () ->(), failure: @escaping (Error) -> ()) {
+        let encodedStatusString = statusString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
+        let replyTweetURLString:String = LoginInfo.STATUS_UPDATE_URL + "status=" + encodedStatusString! + "&in_reply_to_status_id=" + targetId
+
+        post(replyTweetURLString, parameters: nil, progress: nil, success: { (task:URLSessionDataTask, response: Any?) -> Void in
+                success()
+            }, failure: { (task:URLSessionDataTask?, error:Error) -> Void in
+                print("Send Reply Failed. - error: \(error.localizedDescription)")
+                failure(error)
+        })
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 
 }

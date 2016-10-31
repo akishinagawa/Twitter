@@ -52,9 +52,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="124" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Wj2-fQ-h3E">
-                                <frame key="frameInset" width="375" height="667"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="124" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Wj2-fQ-h3E">
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TweetsTableViewCell" rowHeight="124" id="7af-hr-sVz" customClass="TweetsTableViewCell" customModule="Twitter" customModuleProvider="target">
@@ -155,7 +153,7 @@
                                                 <constraint firstItem="Tno-gb-ld8" firstAttribute="leading" secondItem="3eH-PC-JqU" secondAttribute="trailing" constant="4" id="KVQ-b1-Z1a"/>
                                                 <constraint firstAttribute="trailing" secondItem="n3z-MI-hai" secondAttribute="trailing" constant="8" id="L7O-z6-DlN"/>
                                                 <constraint firstItem="77G-PH-sy6" firstAttribute="top" secondItem="2Pc-Wc-uN8" secondAttribute="bottom" constant="10" id="LGU-EP-KeC"/>
-                                                <constraint firstAttribute="trailing" secondItem="2Pc-Wc-uN8" secondAttribute="trailing" constant="28" id="LRJ-jS-6sq"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="2Pc-Wc-uN8" secondAttribute="trailing" constant="28" id="LRJ-jS-6sq"/>
                                                 <constraint firstItem="CEg-S1-RcV" firstAttribute="leading" secondItem="O8l-YF-wYb" secondAttribute="trailing" constant="10" id="NDE-jp-Q8F"/>
                                                 <constraint firstItem="n3z-MI-hai" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Tno-gb-ld8" secondAttribute="trailing" constant="4" id="OY6-pL-Sal"/>
                                                 <constraint firstItem="Njn-No-Koq" firstAttribute="leading" secondItem="el7-Sg-iSN" secondAttribute="trailing" constant="4" id="PLN-HN-Q56"/>
@@ -195,6 +193,12 @@
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Wj2-fQ-h3E" firstAttribute="top" secondItem="YSU-M9-axc" secondAttribute="top" id="PnR-m2-g5L"/>
+                            <constraint firstAttribute="trailing" secondItem="Wj2-fQ-h3E" secondAttribute="trailing" id="hY4-nd-tZM"/>
+                            <constraint firstItem="Ni9-sP-BCI" firstAttribute="top" secondItem="Wj2-fQ-h3E" secondAttribute="bottom" id="scG-sb-NMB"/>
+                            <constraint firstItem="Wj2-fQ-h3E" firstAttribute="leading" secondItem="YSU-M9-axc" secondAttribute="leading" id="vVU-qv-YoK"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="GUI-ay-w45">
                         <barButtonItem key="leftBarButtonItem" title="Logout" id="oiI-TB-0CE">
@@ -260,6 +264,7 @@
                                 <state key="normal" image="reply-action_0"/>
                                 <connections>
                                     <action selector="onReplyButton:" destination="1Be-np-cKJ" eventType="touchUpInside" id="DLs-wV-sXF"/>
+                                    <segue destination="Sqv-tY-HLq" kind="presentation" identifier="toReplyView" id="78O-ux-dYP"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w9I-MS-g0b">
@@ -349,6 +354,82 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BP0-mR-54S" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2416.8000000000002" y="138.98050974512745"/>
+        </scene>
+        <!--Reply View Controller-->
+        <scene sceneID="SVp-Wo-oAo">
+            <objects>
+                <viewController id="Sqv-tY-HLq" customClass="ReplyViewController" customModule="Twitter" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ecI-4A-FDV"/>
+                        <viewControllerLayoutGuide type="bottom" id="pJE-hK-y7D"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="SRD-4O-31X">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X0T-Nl-Rzh">
+                                <items>
+                                    <navigationItem id="Dzc-nd-rQC">
+                                        <barButtonItem key="rightBarButtonItem" style="plain" id="3sU-L2-V5z">
+                                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="A4r-Qz-uyg">
+                                                <rect key="frame" x="329" y="7" width="30" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <state key="normal" title="X"/>
+                                                <connections>
+                                                    <action selector="onExitButton:" destination="Sqv-tY-HLq" eventType="touchUpInside" id="LKd-lQ-xsM"/>
+                                                </connections>
+                                            </button>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rwE-av-ydJ">
+                                <frame key="frameInset" minX="16" minY="34" width="32" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Replying to Adobe" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ry4-pY-J6l">
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Tweet your reply" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oi8-s8-L87">
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="onEditingChanged:" destination="Sqv-tY-HLq" eventType="editingChanged" id="Qzm-uk-9do"/>
+                                </connections>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Ry4-pY-J6l" firstAttribute="leading" secondItem="SRD-4O-31X" secondAttribute="leading" constant="16" id="FLp-tl-kpD"/>
+                            <constraint firstItem="oi8-s8-L87" firstAttribute="leading" secondItem="SRD-4O-31X" secondAttribute="leading" constant="12" id="JiE-1l-zV5"/>
+                            <constraint firstAttribute="trailing" secondItem="X0T-Nl-Rzh" secondAttribute="trailing" id="Pw8-Vo-5df"/>
+                            <constraint firstItem="Ry4-pY-J6l" firstAttribute="top" secondItem="X0T-Nl-Rzh" secondAttribute="bottom" constant="10" id="Qip-bR-BeG"/>
+                            <constraint firstItem="X0T-Nl-Rzh" firstAttribute="top" secondItem="ecI-4A-FDV" secondAttribute="bottom" constant="8" id="Xjf-LS-3sD"/>
+                            <constraint firstAttribute="trailing" secondItem="oi8-s8-L87" secondAttribute="trailing" constant="12" id="ZMv-df-idg"/>
+                            <constraint firstItem="oi8-s8-L87" firstAttribute="top" secondItem="Ry4-pY-J6l" secondAttribute="bottom" constant="20.5" id="fjW-ws-tpN"/>
+                            <constraint firstItem="X0T-Nl-Rzh" firstAttribute="leading" secondItem="SRD-4O-31X" secondAttribute="leading" id="sPo-bH-1Y7"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="evj-D2-5AA">
+                        <barButtonItem key="rightBarButtonItem" title="X" id="fLY-zk-Xo8">
+                            <connections>
+                                <action selector="onExitButton:" destination="Sqv-tY-HLq" id="zu3-Uw-wxa"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="replyTextField" destination="oi8-s8-L87" id="39k-iT-rMz"/>
+                        <outlet property="replyingToLabel" destination="Ry4-pY-J6l" id="v1j-PX-lbr"/>
+                        <outlet property="userImage" destination="rwE-av-ydJ" id="7jD-z3-bvz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7Zd-xR-GGN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2416.8000000000002" y="845.1274362818591"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="nab-qB-AQR">
