@@ -44,7 +44,7 @@ class ReplyViewController: UIViewController {
 
         
         //delay to show keyboard
-        Timer.scheduledTimer(timeInterval: 0.4, target: self, selector: #selector(openKeyBoard), userInfo: nil, repeats: true)
+        Timer.scheduledTimer(timeInterval: 0.4, target: self, selector: #selector(openKeyBoard), userInfo: nil, repeats: false)
     }
     
     @IBAction func onEditingChanged(_ sender: AnyObject) {
@@ -74,7 +74,6 @@ class ReplyViewController: UIViewController {
     
     func openKeyBoard() {
         replyTextField.becomeFirstResponder()
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -92,10 +91,6 @@ class ReplyViewController: UIViewController {
     }
     
     
-    
-    
-    
-
     /*
     // MARK: - Navigation
 

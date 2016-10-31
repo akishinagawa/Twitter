@@ -15,7 +15,6 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBOutlet weak var tweetsTableView: UITableView!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -62,10 +61,6 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 self.tweets = tweets
                 self.tweetsTableView.reloadData()
                 self.refreshControl.endRefreshing()
-            
-//                for tweet in tweets {
-//                    print(tweet.tweetText)
-//                }
             }, failure: { (error:Error) -> () in
                 print("error: \(error.localizedDescription)")
         })
@@ -75,18 +70,24 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         loadTweetData()
     }
     
-    
-    
-    
-    
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         print("prepare for seque called")
-        let cell = sender as! UITableViewCell
-        let indexPath = tweetsTableView.indexPath(for: cell)
-        var tweet = tweets![indexPath!.row]
-        let tweetDetailViewController = segue.destination as! TweetDetailViewController
-        tweetDetailViewController.tweet = tweet
+        
+        if segue.identifier == "toTweetDetail" {
+            let cell = sender as! UITableViewCell
+            let indexPath = tweetsTableView.indexPath(for: cell)
+            let tweet = tweets![indexPath!.row]
+            let tweetDetailViewController = segue.destination as! TweetDetailViewController
+            tweetDetailViewController.tweet = tweet
+        }
+        else {
+            
+        }
+        
+        
+        
+
     }
 
 }

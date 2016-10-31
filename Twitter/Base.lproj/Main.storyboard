@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -18,9 +19,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X5A-eN-DEV">
-                                <frame key="frameInset" minX="100" minY="370" width="175" height="96"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X5A-eN-DEV">
                                 <color key="backgroundColor" red="0.039215686274509803" green="0.60392156862745094" blue="0.91764705882352937" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Login with Twitter">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -29,8 +28,21 @@
                                     <action selector="onLoginButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="b22-rM-ZIx"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Twitter_Social_Icon_Blue" translatesAutoresizingMaskIntoConstraints="NO" id="LpU-yF-xiZ">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="65" id="3yP-dV-1Gd"/>
+                                    <constraint firstAttribute="width" constant="80" id="iE6-dX-XZN"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="X5A-eN-DEV" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="84" id="dDJ-dN-VOV"/>
+                            <constraint firstItem="X5A-eN-DEV" firstAttribute="top" secondItem="LpU-yF-xiZ" secondAttribute="bottom" constant="42" id="f9q-ET-XO7"/>
+                            <constraint firstItem="LpU-yF-xiZ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="jAs-e5-o0P"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="X5A-eN-DEV" secondAttribute="trailing" constant="85" id="mPW-9t-wW5"/>
+                            <constraint firstItem="LpU-yF-xiZ" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="zYX-J8-nja"/>
+                        </constraints>
                     </view>
                     <connections>
                         <segue destination="Kcs-wW-P3B" kind="presentation" identifier="loginSegue" id="75w-Pa-nX5"/>
@@ -206,6 +218,16 @@
                                 <action selector="onLogoutButton:" destination="Knc-rF-7e4" id="vfB-LP-09E"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="riv-EH-EHS">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="LYR-oT-bjH">
+                                <rect key="frame" x="327" y="6" width="32" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="twitter-tweet-icon"/>
+                                <connections>
+                                    <segue destination="QC8-Ks-qh7" kind="presentation" id="Vwc-pm-542"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="tweetsTableView" destination="Wj2-fQ-h3E" id="VAd-8T-Gr0"/>
@@ -214,6 +236,64 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Xi-Ef-teC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1680.8" y="138.98050974512745"/>
+        </scene>
+        <!--Tweet Write View Controller-->
+        <scene sceneID="nPi-iV-dXU">
+            <objects>
+                <viewController id="QC8-Ks-qh7" customClass="TweetWriteViewController" customModule="Twitter" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="wcy-C1-BWp"/>
+                        <viewControllerLayoutGuide type="bottom" id="mE4-Ah-WjK"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="2Xz-45-wog">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wyS-5s-hTB">
+                                <frame key="frameInset" minY="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <navigationItem id="ytf-fB-LYU">
+                                        <barButtonItem key="rightBarButtonItem" style="plain" id="OkQ-sk-662">
+                                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="a2b-xm-swP">
+                                                <rect key="frame" x="339" y="12" width="20" height="20"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <state key="normal" image="close_button"/>
+                                                <connections>
+                                                    <action selector="onExitButton:" destination="Sqv-tY-HLq" eventType="touchUpInside" id="S5P-GZ-3J5"/>
+                                                    <action selector="onExitButton:" destination="QC8-Ks-qh7" eventType="touchUpInside" id="s32-ep-4Cp"/>
+                                                </connections>
+                                            </button>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h7w-nX-7eS">
+                                <frame key="frameInset" minX="16" minY="34" width="32" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="What's happening?" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qRM-qx-70o">
+                                <frame key="frameInset" minX="12" minY="90" width="351" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="onEditingChanged:" destination="Sqv-tY-HLq" eventType="editingChanged" id="aA2-ct-ttR"/>
+                                    <action selector="onEditingChanged:" destination="QC8-Ks-qh7" eventType="editingChanged" id="lCy-mJ-XwG"/>
+                                </connections>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="tweetBodyTextField" destination="qRM-qx-70o" id="l9J-2x-HMw"/>
+                        <outlet property="userImage" destination="h7w-nX-7eS" id="L6b-ic-vuH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5Fb-Sm-vUA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1681" y="-538"/>
         </scene>
         <!--Tweet-->
         <scene sceneID="FXu-iB-3vO">
@@ -371,11 +451,10 @@
                                 <items>
                                     <navigationItem id="Dzc-nd-rQC">
                                         <barButtonItem key="rightBarButtonItem" style="plain" id="3sU-L2-V5z">
-                                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="A4r-Qz-uyg">
-                                                <rect key="frame" x="329" y="7" width="30" height="30"/>
+                                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="A4r-Qz-uyg">
+                                                <rect key="frame" x="339" y="12" width="20" height="20"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                <state key="normal" title="X"/>
+                                                <state key="normal" image="close_button"/>
                                                 <connections>
                                                     <action selector="onExitButton:" destination="Sqv-tY-HLq" eventType="touchUpInside" id="LKd-lQ-xsM"/>
                                                 </connections>
@@ -451,9 +530,12 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Twitter_Social_Icon_Blue" width="80" height="65"/>
+        <image name="close_button" width="86" height="86"/>
         <image name="expandIcon" width="20" height="20"/>
         <image name="like-action" width="54" height="72"/>
         <image name="reply-action_0" width="65" height="72"/>
         <image name="retweet-action" width="75" height="72"/>
+        <image name="twitter-tweet-icon" width="72" height="72"/>
     </resources>
 </document>

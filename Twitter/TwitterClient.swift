@@ -10,7 +10,6 @@ import UIKit
 import BDBOAuth1Manager
 
 
-
 struct LoginInfo {
     static let TWITTER_URL_STRING = "https://api.twitter.com"
     static let COMSUMER_KEY = "DgAvzctGL7Bmqiju8V38drglL"
@@ -22,14 +21,17 @@ struct LoginInfo {
     static let VERIFY_CREDENTIAL_URL = "1.1/account/verify_credentials.json"
     static let HOME_TIMELINE_URL = "1.1/statuses/home_timeline.json"
     
-    static let RETWEET_URL_PARTIAL = "1.1/statuses/retweet/"
+    static let RETWEET_URL_PREFIX = "1.1/statuses/retweet/"
+    static let RETWEET_URL_SUFFIX = ".json"
     
     static let STATUS_UPDATE_URL = "1.1/statuses/update.json?"
     
+    static let FAVORITE_URL_PREFIX = "1.1/favorites/create.json?id="
+
 }
 
 class TwitterClient: BDBOAuth1SessionManager {
-    
+
     static let sharedInstance = TwitterClient(baseURL: URL(string: LoginInfo.TWITTER_URL_STRING), consumerKey: LoginInfo.COMSUMER_KEY, consumerSecret: LoginInfo.COSUMER_SECRET)
  
     var loginSuccess: (() -> ())?
@@ -60,7 +62,6 @@ class TwitterClient: BDBOAuth1SessionManager {
     func handleOpenUrl (url: URL) {
         let requestToken = BDBOAuth1Credential(queryString: url.query)
         fetchAccessToken(withPath: LoginInfo.ACCESS_TOKEN_URL, method: "POST", requestToken: requestToken, success: { (accessToken:BDBOAuth1Credential?) -> Void in
-            
             self.currentAccount(success: { (user: User) -> () in
                 User.currentUser = user
                 self.loginSuccess?()
@@ -89,7 +90,7 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
 
-    func currentAccount(success: @escaping (User) ->(), failure: @escaping (Error) -> ()) {
+    func currentAccount(success: @escaping (User) -> (), failure: @escaping (Error) -> ()) {
         get(LoginInfo.VERIFY_CREDENTIAL_URL, parameters: nil, progress: nil, success: { (task:URLSessionDataTask, response: Any?) -> Void in
             let userDictionary = response as! NSDictionary
             let user = User(dictionary: userDictionary)
@@ -102,20 +103,19 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
-    
-    func sendTweet(statusString: String, success: @escaping () ->(), failure: @escaping (Error) -> ()) {
-        let encodedStatusString = statusString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
-        let replyTweetURLString:String = LoginInfo.STATUS_UPDATE_URL + "status=" + encodedStatusString!
+    func sendTweet(tweetString: String, success: @escaping () -> (), failure: @escaping (Error) -> ()) {
+        let encodedTweetString = tweetString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
+        let tweetURLString:String = LoginInfo.STATUS_UPDATE_URL + "status=" + encodedTweetString!
         
-        post(replyTweetURLString, parameters: nil, progress: nil, success: { (task:URLSessionDataTask, response: Any?) -> Void in
-            success()
+        post(tweetURLString, parameters: nil, progress: nil, success: { (task:URLSessionDataTask, response: Any?) -> Void in
+                success()
             }, failure: { (task:URLSessionDataTask?, error:Error) -> Void in
                 print("Send Tweet Failed. - error: \(error.localizedDescription)")
                 failure(error)
         })
     }
     
-    func sendReplyTweet(targetId: String, statusString: String, success: @escaping () ->(), failure: @escaping (Error) -> ()) {
+    func sendReplyTweet(targetId: String, statusString: String, success: @escaping () -> (), failure: @escaping (Error) -> ()) {
         let encodedStatusString = statusString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
         let replyTweetURLString:String = LoginInfo.STATUS_UPDATE_URL + "status=" + encodedStatusString! + "&in_reply_to_status_id=" + targetId
 
@@ -127,15 +127,25 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
+    func sendRetweet(targetId: String, success: @escaping () -> (), failure: @escaping (Error) -> ()) {
+        let retweetURLString:String = LoginInfo.RETWEET_URL_PREFIX + targetId + LoginInfo.RETWEET_URL_SUFFIX
+
+        post(retweetURLString, parameters: nil, progress: nil, success: { (task:URLSessionDataTask, response: Any?) -> Void in
+                success()
+            }, failure: { (task:URLSessionDataTask?, error:Error) -> Void in
+                print("Send Retweet Failed. - error: \(error.localizedDescription)")
+                failure(error)
+        })
+    }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    func sendFavorite(targetId: String, success: @escaping () -> (), failure: @escaping (Error) -> ()) {
+        let retweetURLString:String = LoginInfo.FAVORITE_URL_PREFIX + targetId
+        post(retweetURLString, parameters: nil, progress: nil, success: { (task:URLSessionDataTask, response: Any?) -> Void in
+                success()
+            }, failure: { (task:URLSessionDataTask?, error:Error) -> Void in
+                print("Send Favorite Failed. - error: \(error.localizedDescription)")
+                failure(error)
+        })
+    }
 
 }

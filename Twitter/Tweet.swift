@@ -26,10 +26,8 @@ class Tweet: NSObject {
     
     var tweetId:String?
     
-    
     init(dictionary: NSDictionary) {
 //        print("-------->>> \(dictionary)")
-
         var tweetData:NSDictionary!
         
         let retweetedStatus = dictionary["retweeted_status"] as? NSDictionary
@@ -72,10 +70,10 @@ class Tweet: NSObject {
         formatter.dateFormat = "EEE MM d HH:mm:ss Z y"
         if let timestampString = timestampString {
             tweetedTimeStamp = formatter.date(from: timestampString) as NSDate?
+            
         }
         
         tweetId = tweetData["id_str"] as? String
-
     }
     
     class func tweetWithArray(dictionaries: [NSDictionary]) -> [Tweet] {
@@ -89,6 +87,11 @@ class Tweet: NSObject {
     }
     
     
-  
+    
+    
 
+    
+    
+    
+    
 }

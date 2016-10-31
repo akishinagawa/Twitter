@@ -26,13 +26,22 @@ class TweetDetailViewController: UIViewController {
     }
     
     @IBAction func onRetweetButton(_ sender: AnyObject) {
-        
+        TwitterClient.sharedInstance?.sendRetweet(targetId: tweet.tweetId!, success: {() -> Void in
+                // TODO: do something?
+            }, failure: {(error:Error) -> Void in
+                // TODO: show alert windows
+                print("Error:\(error.localizedDescription)")
+        })
     }
     
     @IBAction func onFavoriteButton(_ sender: AnyObject) {
-        
+        TwitterClient.sharedInstance?.sendFavorite(targetId: tweet.tweetId!, success: {() -> Void in
+            // TODO: do something?
+            }, failure: { (error: Error) in
+                // TODO: show alert windows
+                print("Error:\(error.localizedDescription)")
+        })
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,7 +69,6 @@ class TweetDetailViewController: UIViewController {
             tweeterScreenNameLabel.text = "@" + tweet.userScreenName!
             
             //            tweetedTimeLabel.text = tweet.tweetedTimeStamp
-            
             
             let retweetCountText:String?
             if tweet.retweetCount > 0 {
@@ -94,45 +102,19 @@ class TweetDetailViewController: UIViewController {
         else {
             print("ERROR: tweet data hasn't been passed to TweetDetailViewController.")
         }
-        
-
-        
-        
-        
-        
-        
-        
-        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
-    
 
-    
-    
-    
-
-    
     // MARK: - Navigation toReplyView
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
-
         if segue.identifier == "toReplyView" {
             let targetViewController = segue.destination as! ReplyViewController
-            
             targetViewController.tweet = self.tweet
-            
         }
-
-        
     }
  
-
 }

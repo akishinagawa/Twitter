@@ -8,9 +8,9 @@
 
 import UIKit
 
+
 class User: NSObject {
 
-    
     var name: String?
     var screenName: String?
     var profileUrl: URL?
@@ -30,7 +30,6 @@ class User: NSObject {
             profileUrl = URL(string:profileUrlString)
         }
         tagline = dictionary["description"] as? String
-
     }
     
     static var _currentUser: User?
@@ -53,7 +52,6 @@ class User: NSObject {
         
         set(user) {
             _currentUser = user
-            
             let defaults = UserDefaults.standard
            
             if let user = user {
@@ -68,11 +66,4 @@ class User: NSObject {
             defaults.synchronize()
         }
     }
-    
-    
-    
-    
-
-    
-    
 }
