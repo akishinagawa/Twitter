@@ -27,12 +27,18 @@ class Tweet: NSObject {
     
     var tweetId:String?
     
+    var didIRetweeted:Bool?
+    var didIFavorited:Bool?
+    
     init(dictionary: NSDictionary) {
         super.init()
+        //print("-------->>> \(dictionary)")
         
-//        print("-------->>> \(dictionary)")
         var tweetData:NSDictionary!
         
+        didIRetweeted = dictionary["retweeted"] as? Bool
+        didIFavorited = dictionary["favorited"] as? Bool
+ 
         let retweetedStatus = dictionary["retweeted_status"] as? NSDictionary
         if retweetedStatus != nil {
             isRetweeted = true
@@ -78,9 +84,6 @@ class Tweet: NSObject {
         }
         
         tweetId = tweetData["id_str"] as? String
-        
-        print(timeStampString)
-        print("--------")
     }
     
     class func tweetWithArray(dictionaries: [NSDictionary]) -> [Tweet] {

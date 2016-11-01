@@ -12,7 +12,16 @@ import Foundation
 
 class TweetsTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var retweetedIcon: UIImageView!
+
+    @IBOutlet weak var retweetedByIcon: UIImageView!
+    
+    
+    
+    @IBOutlet weak var retweetIcon: UIImageView!
+    @IBOutlet weak var retweetIconOn: UIImageView!
+    @IBOutlet weak var likeIcon: UIImageView!
+    @IBOutlet weak var likeIconOn: UIImageView!
+    
     @IBOutlet weak var nameRetweetedByLabel: UILabel!
     
     @IBOutlet weak var tweeterImage: UIImageView!
@@ -28,14 +37,14 @@ class TweetsTableViewCell: UITableViewCell {
     var tweet: Tweet! {
         didSet {
             if tweet.isRetweeted {
-                retweetedIcon.isHidden = false
+                retweetedByIcon.isHidden = false
                 nameRetweetedByLabel.isHidden = false
                 nameRetweetedByLabel.text = tweet.retweeterUserName! + " Retweeted"
                 
                 //TODO: set height to 0
             }
             else{
-                retweetedIcon.isHidden = true
+                retweetedByIcon.isHidden = true
                 nameRetweetedByLabel.isHidden = true
                 nameRetweetedByLabel.text = ""
                 
@@ -52,6 +61,24 @@ class TweetsTableViewCell: UITableViewCell {
             
             reweetedCountLabel.text = String(tweet.retweetCount)
             likedCountLabel.text = String(tweet.favoritesCount)
+            
+            if tweet.didIRetweeted! != true {
+                retweetIcon.isHidden = false
+                retweetIconOn.isHidden = true
+            }
+            else {
+                retweetIcon.isHidden = true
+                retweetIconOn.isHidden = false
+            }
+            
+            if tweet.didIFavorited! != true {
+                likeIcon.isHidden = false
+                likeIconOn.isHidden = true
+            }
+            else {
+                likeIcon.isHidden = true
+                likeIconOn.isHidden = false
+            }
         }
     }
     

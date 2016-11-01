@@ -22,11 +22,13 @@ struct LoginInfo {
     static let HOME_TIMELINE_URL = "1.1/statuses/home_timeline.json"
     
     static let RETWEET_URL_PREFIX = "1.1/statuses/retweet/"
+    static let UNRETWEET_URL_PREFIX = "1.1/statuses/unretweet/"
     static let RETWEET_URL_SUFFIX = ".json"
     
     static let STATUS_UPDATE_URL = "1.1/statuses/update.json?"
     
     static let FAVORITE_URL_PREFIX = "1.1/favorites/create.json?id="
+    static let UNFAVORITE_URL_PREFIX = "1.1/favorites/destroy.json?id="
 
 }
 
@@ -138,12 +140,33 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
+    func sendUnretweet(targetId: String, success: @escaping () -> (), failure: @escaping (Error) -> ()) {
+        let unretweetURLString:String = LoginInfo.UNRETWEET_URL_PREFIX + targetId + LoginInfo.RETWEET_URL_SUFFIX
+        
+        post(unretweetURLString, parameters: nil, progress: nil, success: { (task:URLSessionDataTask, response: Any?) -> Void in
+            success()
+            }, failure: { (task:URLSessionDataTask?, error:Error) -> Void in
+                print("Send UNretweet Failed. - error: \(error.localizedDescription)")
+                failure(error)
+        })
+    }
+ 
     func sendFavorite(targetId: String, success: @escaping () -> (), failure: @escaping (Error) -> ()) {
-        let retweetURLString:String = LoginInfo.FAVORITE_URL_PREFIX + targetId
-        post(retweetURLString, parameters: nil, progress: nil, success: { (task:URLSessionDataTask, response: Any?) -> Void in
-                success()
+        let favoriteURLString:String = LoginInfo.FAVORITE_URL_PREFIX + targetId
+        post(favoriteURLString, parameters: nil, progress: nil, success: { (task:URLSessionDataTask, response: Any?) -> Void in
+            success()
             }, failure: { (task:URLSessionDataTask?, error:Error) -> Void in
                 print("Send Favorite Failed. - error: \(error.localizedDescription)")
+                failure(error)
+        })
+    }
+    
+    func sendUnfavorite(targetId: String, success: @escaping () -> (), failure: @escaping (Error) -> ()) {
+        let unfavoriteURLString:String = LoginInfo.UNFAVORITE_URL_PREFIX + targetId
+        post(unfavoriteURLString, parameters: nil, progress: nil, success: { (task:URLSessionDataTask, response: Any?) -> Void in
+            success()
+            }, failure: { (task:URLSessionDataTask?, error:Error) -> Void in
+                print("Send Unfavorite Failed. - error: \(error.localizedDescription)")
                 failure(error)
         })
     }
