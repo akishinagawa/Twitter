@@ -17,6 +17,7 @@ class Tweet: NSObject {
     var retweeterUserName: String?
     
     var tweetedTimeStamp: NSDate?
+    var timeStampString: String?
     var userImageUrlString: String?
     var userImageUrl: URL?
     
@@ -27,6 +28,8 @@ class Tweet: NSObject {
     var tweetId:String?
     
     init(dictionary: NSDictionary) {
+        super.init()
+        
 //        print("-------->>> \(dictionary)")
         var tweetData:NSDictionary!
         
@@ -70,10 +73,14 @@ class Tweet: NSObject {
         formatter.dateFormat = "EEE MM d HH:mm:ss Z y"
         if let timestampString = timestampString {
             tweetedTimeStamp = formatter.date(from: timestampString) as NSDate?
+            timeStampString = tweetedTimeStampToString(tweetedDate: tweetedTimeStamp!)
             
         }
         
         tweetId = tweetData["id_str"] as? String
+        
+        print(timeStampString)
+        print("--------")
     }
     
     class func tweetWithArray(dictionaries: [NSDictionary]) -> [Tweet] {
@@ -87,7 +94,54 @@ class Tweet: NSObject {
     }
     
     
-    
+    func tweetedTimeStampToString(tweetedDate: NSDate) -> String {
+        let date = tweetedDate as Date
+        let calendar = Calendar.current
+        let currentDate = Date()
+        
+        let yearDiff = calendar.component(.year, from: currentDate) - calendar.component(.year, from: date)
+        let monthDiff = calendar.component(.month, from: currentDate) - calendar.component(.month, from: date)
+        let dayDiff = calendar.component(.day, from: currentDate) - calendar.component(.day, from: date)
+        let hourDiff = calendar.component(.hour, from: currentDate) - calendar.component(.hour, from: date)
+        let minutesDiff = calendar.component(.minute, from: currentDate) - calendar.component(.minute, from: date)
+        let secondsDiff = calendar.component(.second, from: currentDate) - calendar.component(.second, from: date)
+        //print("hours = \(yearDiff):\(monthDiff):\(dayDiff):\(hourDiff):\(minutesDiff):\(secondsDiff)")
+        
+        if yearDiff > 1 {
+            return "over 1yr"
+        }
+        
+        if yearDiff > 0 {
+            return String(yearDiff) + "yr"
+        }
+        
+        if monthDiff > 0 {
+            return String(monthDiff) + "mo"
+        }
+        
+        if dayDiff >= 7 {
+            let value = dayDiff/7
+            return String(value) + "w"
+        }
+        
+        if dayDiff > 0 {
+            return String(dayDiff) + "d"
+        }
+        
+        if hourDiff > 0 {
+            return String(hourDiff) + "h"
+        }
+        
+        if minutesDiff > 0 {
+            return String(minutesDiff) + "m"
+        }
+        
+        if secondsDiff > 0 {
+            return String(secondsDiff) + "s"
+        }
+        
+        return ""
+    }
     
 
     

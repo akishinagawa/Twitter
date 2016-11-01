@@ -68,7 +68,7 @@ class TweetDetailViewController: UIViewController {
             tweeterNameLabel.text = tweet.userName
             tweeterScreenNameLabel.text = "@" + tweet.userScreenName!
             
-            //            tweetedTimeLabel.text = tweet.tweetedTimeStamp
+            tweetedTimeLabel.text = tweet.timeStampString
             
             let retweetCountText:String?
             if tweet.retweetCount > 0 {

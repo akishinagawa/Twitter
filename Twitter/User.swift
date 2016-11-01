@@ -59,8 +59,8 @@ class User: NSObject {
                 defaults.set(data, forKey: "currentUserData")
             }
             else {
-                defaults.set(nil, forKey:"currentUserData")
-                //defaults.removeObject(forKey: "currentUserData")
+                //defaults.set(nil, forKey:"currentUserData") // causing crash
+                defaults.removeObject(forKey: "currentUserData")
             }
             
             defaults.synchronize()
