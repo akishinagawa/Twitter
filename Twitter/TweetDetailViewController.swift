@@ -8,10 +8,6 @@
 
 import UIKit
 
-@objc protocol TweetDetailViewControllerDelegate {
-    @objc optional func tweetDetailViewController(tweetDetailViewController: TweetDetailViewController)
-}
-
 class TweetDetailViewController: UIViewController {
     
     @IBOutlet weak var retweetedIcon: UIImageView!
@@ -28,8 +24,6 @@ class TweetDetailViewController: UIViewController {
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var favoriteOnButon: UIButton!
     
-     weak var delegate: TweetDetailViewControllerDelegate?
-    
     var tweet: Tweet!
     
     @IBAction func onReplyButton(_ sender: AnyObject) {
@@ -38,11 +32,10 @@ class TweetDetailViewController: UIViewController {
     
     @IBAction func onRetweetButton(_ sender: AnyObject) {
         TwitterClient.sharedInstance?.sendRetweet(targetId: tweet.tweetId!, success: {() -> Void in
-                // TODO: do something?
-                self.tweet.didIRetweeted = true
+                self.tweet.updateRetweetStatus(count:1, retweeted:true)
+                self.updateIcons()
             }, failure: {(error:Error) -> Void in
-                // TODO: show alert windows
-                self.tweet.didIRetweeted = false
+                self.updateIcons()
                 print("Error:\(error.localizedDescription)")
         })  
         updateIcons()
@@ -50,12 +43,9 @@ class TweetDetailViewController: UIViewController {
     
     @IBAction func onRetweetOnButton(_ sender: AnyObject) {
         TwitterClient.sharedInstance?.sendUnretweet(targetId: tweet.tweetId!, success: {() -> Void in
-                // TODO: do something?
-                self.tweet.didIRetweeted = false
+                self.tweet.updateRetweetStatus(count:-1, retweeted:false)
                 self.updateIcons()
             }, failure: {(error:Error) -> Void in
-                // TODO: show alert windows
-                self.tweet.didIRetweeted = true
                 self.updateIcons()
                 print("Error:\(error.localizedDescription)")
         })
@@ -63,12 +53,10 @@ class TweetDetailViewController: UIViewController {
     
     @IBAction func onFavoriteButton(_ sender: AnyObject) {
         TwitterClient.sharedInstance?.sendFavorite(targetId: tweet.tweetId!, success: {() -> Void in
-                // TODO: do something?
-                self.tweet.didIFavorited = true
+                self.tweet.updateFavoriteStatus(count:1, favorited:true)
                 self.updateIcons()
             }, failure: { (error: Error) in
-                // TODO: show alert windows
-                self.tweet.didIFavorited = false
+
                 self.updateIcons()
                 print("Error:\(error.localizedDescription)")
         })
@@ -76,12 +64,9 @@ class TweetDetailViewController: UIViewController {
     
     @IBAction func onFavoriteOnButton(_ sender: AnyObject) {
         TwitterClient.sharedInstance?.sendUnfavorite(targetId: tweet.tweetId!, success: {() -> Void in
-                // TODO: do something?
-                self.tweet.didIFavorited = false
+                self.tweet.updateFavoriteStatus(count:11, favorited:false)
                 self.updateIcons()
             }, failure: { (error: Error) in
-                // TODO: show alert windows
-                self.tweet.didIFavorited = true
                 self.updateIcons()
                 print("Error:\(error.localizedDescription)")
         })
@@ -161,6 +146,9 @@ class TweetDetailViewController: UIViewController {
             let targetViewController = segue.destination as! ReplyViewController
             targetViewController.tweet = self.tweet
         }
+        else if segue.identifier == "toTweetDetail"  {
+            print("unwind to toTweetDetail")
+        }
     }
     
     func updateIcons () {
@@ -189,15 +177,5 @@ class TweetDetailViewController: UIViewController {
             favoriteOnButon.isHidden = true
             favoriteOnButon.isEnabled = false
         }
-        
-        delegate?.tweetDetailViewController?(tweetDetailViewController: self)
     }
-    
-    override func unwind(for unwindSegue: UIStoryboardSegue, towardsViewController subsequentVC: UIViewController) {
-        print()
-        
-        
-        
-    }
- 
 }

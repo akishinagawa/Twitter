@@ -8,13 +8,19 @@
 
 import UIKit
 
-class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, TweetDetailViewControllerDelegate {
+class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     var tweets: [Tweet]?
     var refreshControl: UIRefreshControl!
     
     @IBOutlet weak var tweetsTableView: UITableView!
     
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tweetsTableView.reloadData()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -80,14 +86,9 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let tweet = tweets![indexPath!.row]
             let tweetDetailViewController = segue.destination as! TweetDetailViewController
             tweetDetailViewController.tweet = tweet
-            tweetDetailViewController.delegate = self
         }
         else {
             
         }
-    }
-    
-    func tweetDetailViewController(tweetDetailViewController: TweetDetailViewController) {
-        tweetsTableView.reloadData()
     }
 }

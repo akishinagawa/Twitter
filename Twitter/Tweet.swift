@@ -146,9 +146,14 @@ class Tweet: NSObject {
         return ""
     }
     
-
+    func updateRetweetStatus(count: Int, retweeted:Bool) {
+        retweetCount = retweetCount + count
+        didIRetweeted = retweeted
+    }
     
-    
-    
+    func updateFavoriteStatus(count: Int, favorited:Bool) {
+        favoritesCount = favoritesCount + count
+        didIFavorited = favorited
+    }
     
 }
